@@ -42,7 +42,8 @@ def fetch_projects(page, keyword:str) -> list[Dict]:
     for i in range(min(2, count)):
         project_card = projects.nth(i)
         raw_summary = {}
-        serch_info = {"keyword": keyword, "rank": i+1}
+        # serch_info = {"keyword": keyword, "rank": i+1}
+        serch_info = {"keyword": keyword}
         for key, val in selectors.items():
             # print(f"key:{key} , val:{val}")
             project_item = project_card.locator(val)
@@ -67,7 +68,7 @@ def operate_playwright(keywords:list,) -> list:
             results = fetch_projects(page, keyword)
             # print("result", results)
             all_results.extend(results)
-        print("all_results: ", all_results)
+        # print("all_results: ", all_results)
         browser.close()
     
     return all_results
