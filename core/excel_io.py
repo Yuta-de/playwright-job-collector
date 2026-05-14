@@ -15,8 +15,11 @@ def read_keywords(file_path:str) -> list:
 def export_projects(all_results:list, file_path:str) -> None:
     output_path = Path(file_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
+    df = pd.DataFrame(all_results) #keywordごと 
+    if len(df) == 0:
+        print("追加データはありません")
+        return
+
     with pd.ExcelWriter(output_path, engine="openpyxl", ) as writer:
-        df = pd.DataFrame(all_results) #keywordごと
-        # print("df:",df)
         column_name = PROJECT_COLUMNS
         df.to_excel(writer, sheet_name="案件一覧", index=False, columns=column_name)

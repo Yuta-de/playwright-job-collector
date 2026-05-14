@@ -44,6 +44,11 @@ def fetch_projects(page, keyword:str) -> list[Dict]:
         raw_summary = {}
         # serch_info = {"keyword": keyword, "rank": i+1}
         serch_info = {"keyword": keyword}
+        
+        card_id = project_card.get_attribute("id")
+        project_id = card_id.replace("ProjectListPc_ProjectCard_", "")
+        print(f"{project_id=}")
+        
         for key, val in selectors.items():
             # print(f"key:{key} , val:{val}")
             project_item = project_card.locator(val)
@@ -53,7 +58,10 @@ def fetch_projects(page, keyword:str) -> list[Dict]:
                 text_list = ["表記なし"]
             raw_summary[key] = text_list
         # print("summary:",raw_summary)
+        raw_summary["project_id"] = [project_id]
+        print(f"{raw_summary=}")
         summary = normalize_project(raw_summary)
+        
         results.extend([serch_info | summary])
     return results
 
